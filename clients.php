@@ -103,7 +103,7 @@
     </div>
 
     <!--Ajout d'un client + requêtages-->
-    <form>
+    <form action="forms.php" method="post">
         <div class="form-group row mb-4">
             <h5>Contact</h5>
             <label for="nameClient" class="col-sm-2 col-form-label">Name</label>
@@ -111,9 +111,9 @@
             <input type="text" class="form-control" name="nameClient">
             </div>
 
-            <label for="numberPhone" class="col-sm-2 col-form-label">Phone Number</label>
+            <label for="phoneAddress" class="col-sm-2 col-form-label">Phone Number</label>
             <div class="col-sm-4">
-            <input type="text" class="form-control" name="numberPhone">
+            <input type="text" class="form-control" name="phoneAddress">
             </div>
 
             <label for="mailClient" class="col-sm-2 col-form-label">Email</label>
@@ -121,35 +121,35 @@
             <input type="email" class="form-control" name="mailClient">
             </div>
 
-            <label for="fbClient" class="col-sm-2 col-form-label">Facebook</label>
+            <label for="facebook" class="col-sm-2 col-form-label">Facebook</label>
             <div class="col-sm-4">
-            <input type="text" class="form-control" name="facebookClient">
+            <input type="text" class="form-control" name="facebook">
             </div>
 
-            <label for="instaClient" class="col-sm-2 col-form-label">Instagram</label>
+            <label for="instagram" class="col-sm-2 col-form-label">Instagram</label>
             <div class="col-sm-4  mb-2">
-            <input type="text" class="form-control" name="instaClient">
+            <input type="text" class="form-control" name="instagram">
             </div>
         </div>
 
         <div class="form-group row mb-4">
             <h5>Adress</h5> 
-            <label for="numberStreet" class="col-sm-2 col-form-label">Street Number</label>
+            <label for="numAddress" class="col-sm-2 col-form-label">Street Number</label>
             <div class="col-sm-4  mb-2">
-            <input type="text" class="form-control" name="numberStreet">
+            <input type="text" class="form-control" name="numAddress">
             </div>
-            <label for="street" class="col-sm-2 col-form-label">Street</label>
+            <label for="streetAddress" class="col-sm-2 col-form-label">Street</label>
             <div class="col-sm-4">
-            <input type="text" class="form-control" name="street">
+            <input type="text" class="form-control" name="streetAddress">
             </div>
 
-            <label for="city" class="col-sm-2 col-form-label">City</label>
+            <label for="cityAddress" class="col-sm-2 col-form-label">City</label>
             <div class="col-sm-2  mb-2">
-            <input type="text" class="form-control" name="city">
+            <input type="text" class="form-control" name="cityAddress">
             </div>
-            <label for="zipCode" class="col-sm-2 col-form-label">ZIP Code</label>
+            <label for="cityCode" class="col-sm-2 col-form-label">ZIP Code</label>
             <div class="col-sm-2">
-            <input type="text" class="form-control" name="zipCode">
+            <input type="text" class="form-control" name="cityCode">
             </div>
             <label for="countryCode" class="col-sm-2 col-form-label">Country Code</label>
             <div class="col-sm-2">
@@ -162,11 +162,11 @@
             <label for="membership" class="col-sm-2 col-form-label  mb-2">Membership</label>
             
             <div class="form-group col-sm-2">
-                <select id="membership" class="form-control">
-                    <option selected>Silver</option>
-                    <option disabled>Gold</option>
-                    <option disabled>Platinium</option>
-                    <option>Ultimate</option>
+                <select name="membership" class="form-control">
+                    <option value="1" selected>Silver</option>
+                    <option value="2" disabled>Gold</option>
+                    <option value="3" disabled>Platinium</option>
+                    <option value="4">Ultimate</option>
                 </select>
             </div>
             
@@ -188,5 +188,13 @@
         </div>
     </form>
 </div>
+
+<script>
+    let message = "<?php echo $_SESSION["message"];?>";
+    if(message != ""){
+        alert(message);
+    }
+</script>
+
 </body>
 </html>

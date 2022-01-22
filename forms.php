@@ -138,52 +138,77 @@
 
         // Send the edit request to database
         if(isset($_POST["edit_client"])){
-            $request = "UPDATE `clients` SET nameClient ='". $_POST["nameClient"] . "', ";
+            edtClient($conn);
 
-			$request .= "mailClient='". $_POST["mailClient"] ."', ";
-			$request .= "facebook='". $_POST["facebook"] ."', ";
-			$request .= "instagram='". $_POST["instagram"] ."' ";
-
-			$request .= "WHERE codeclient='". $_POST["codeclient"]."'";
-
-			$result = $conn->query($request);
-			if($result === TRUE){
-                $_SESSION["message"] = "Success! Les modifications ont bien été pris en compte.";
-				header("Location: clients.php");							
-			}else{
-				alertFunction("Failed");
-			}
-
-            /*
-            $request = "SELECT `idAddress` FROM `address` WHERE ";
-            $request .= "`countryCode`='". $_POST["countryCode"] ."' AND ";
-            $request .= "`cityAddress`='". $_POST["cityAddress"] ."' AND ";
-            $request .= "`cityCode`='". $_POST["cityCode"] ."' AND ";
-            $request .= "`streetAddress`='". $_POST["streetAddress"] ."' AND ";
-            $request .= "`numAddress`='". $_POST["numAddress"] ."' AND ";
-            $request .= "`phoneAddress`='". $_POST["phoneAddress"] ."'";
-
-            echo $request;
-
-            $result = $conn->query($request);
-            $isRegistered = array();
-            while($row = mysqli_fetch_array($result)){
-                $isRegistered[] = $row; 
-            }
+            // Check if the address is already resgistred or not            
+            $isRegistered = isAddressRegistered($conn);
 
             if(empty($isRegistered)){
-                // Create a new address and link it to client with habite and adress 
-                alertFunction("I am in");
+                // Create a new address and link it to client with habite and adress
+                // Add new address
+                addAddress($conn);
 
-
-
-
+                // Get new address id
+                $newIDaddress = getNewAddresID($conn);
+                
+                // Link the new address to the client
+                edtHabite($conn, $newIDaddress);
+                
+                // Delete old address
+                delHabite($conn);          
             }else{
-                // Update habite 
-            }*/
+                // Update habite
+                $idAddress = $isRegistered[0]["idAddress"];
 
-            //// Delete habite et repeat datas in clients
+                edtHabite($conn, $idAddress);
+            } 
+            
+            $_SESSION["message"] = "Success! Les modifications ont bien été pris en compte.";
+            header("Location: clients.php");
+        }
 
+        if(isset($_POST["add_client"])){
+            addClient($conn);
+
+            // Get new client id
+            $newIDclient = getNewClientID($conn);
+
+            // Check if the address is already resgistred or not            
+            $isRegistered = isAddressRegistered($conn);
+
+            if(empty($isRegistered)){
+                // Create a new address and link it to client with habite and adress
+                // Add new address
+                addAddress($conn);
+
+                // Get new address id
+                $newIDaddress = getNewAddresID($conn);
+                
+                // Link the new address to the new client
+                addHabiteNewClient($conn, $newIDaddress, $newIDclient);          
+            }else{
+                // Update habite
+                $idAddress = $isRegistered[0]["idAddress"];
+
+                // Link the new address to the new client
+                addHabiteNewClient($conn, $newIDaddress, $newIDclient);
+            } 
+
+            // Link the new card to the client
+            addCard($conn, $newIDclient);
+
+            // Get new card id
+            $newIDcard = getNewCardID($conn, $newIDclient);
+            
+            addPoints($conn);
+
+            // Get new points id
+            $newIDpoint = getNewPointID($conn);
+
+            addCardPoint($conn, $newIDcard, $newIDpoint);
+
+            $_SESSION["message"] = "Success! La création du compte a bien été pris en compte.";
+            header("Location: clients.php");
         }
     ?>
 </div>
