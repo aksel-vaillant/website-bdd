@@ -87,6 +87,7 @@ function getListOrderStatus($conn){
     return $orderstatus;
 }
 
+// Add a client
 function addClient($conn){
     $request = "INSERT INTO `clients` (`codeclient`, `nameClient`, `mailClient`, `facebook`, `instagram`)
                 VALUES (";
@@ -105,6 +106,7 @@ function addClient($conn){
     }
 }
 
+// Edit a client
 function edtClient($conn){
     $request = "UPDATE `clients` SET nameClient ='". $_POST["nameClient"] . "', ";
     $request .= "mailClient='". $_POST["mailClient"] ."', ";
@@ -117,6 +119,7 @@ function edtClient($conn){
     }
 }
 
+// Get a client id with $_POST datas
 function getNewClientID($conn){
     // Get new address id
     $request = "SELECT `codeClient` FROM `clients` WHERE ";
@@ -132,6 +135,7 @@ function getNewClientID($conn){
     return $newIDclient;
 }
 
+// Add a card
 function addCard($conn, $idClient){
     $request = "INSERT INTO `card` (`idCard`, `codeClient`, `idMembership`)
                 VALUES ('DEFAULT',";
@@ -143,6 +147,7 @@ function addCard($conn, $idClient){
     }
 }
 
+// Get the last ID card created
 function getNewCardID($conn, $idClient){
     $request = "SELECT `idCard` FROM `card` WHERE ";
     $request .= "`codeClient`='". $idClient ."'";
@@ -155,6 +160,7 @@ function getNewCardID($conn, $idClient){
     return $newIDcard;
 }
 
+// Add points with an expery date
 function addPoints($conn){
     $request = "INSERT INTO `points` (`idPoints`, `numPoint`, `experyPoint`)
                 VALUES ('DEFAULT',";
@@ -166,10 +172,12 @@ function addPoints($conn){
     }
 }
 
+// Get the last ID point created 
 function getNewPointID($conn){
     return calculateRows($conn, "idPoints", "`points`");
 }
 
+// Add points to the card
 function addCardPoint($conn, $idCard, $idPoints){
     $request = "INSERT INTO `cartepoint` (`idCard`, `idPoints`) VALUES (";
     $request .= "'". $idCard . "',";
@@ -180,6 +188,7 @@ function addCardPoint($conn, $idCard, $idPoints){
     }
 }
 
+// Check if an adress is already registered in the database with $_POST datas
 function isAddressRegistered($conn){
     $request = "SELECT `idAddress` FROM `address` WHERE ";
     $request .= "`countryCode`='". $_POST["countryCode"] ."' AND ";
@@ -196,6 +205,7 @@ function isAddressRegistered($conn){
     return $isRegistered;
 }
 
+// Add an address
 function addAddress($conn){
     $request = "INSERT INTO `address` (`idAddress`, `countryCode`, `cityAddress`, `cityCode`, `streetAddress`, `numAddress`,`phoneAddress`)
                 VALUES ('DEFAULT',";
@@ -211,6 +221,7 @@ function addAddress($conn){
     }
 }
 
+// Get ID address by $_POST datas
 function getNewAddresID($conn){
     // Get new address id
     $request = "SELECT `idAddress` FROM `address` WHERE ";
@@ -228,6 +239,7 @@ function getNewAddresID($conn){
     return $newIDaddress;
 }
 
+// Add a "habite" with $_POST data with a codeclient
 function addHabite($conn, $newIDaddress){
     $request ="INSERT INTO `habite` (`codeclient`, `idAddress`) VALUES (";
     $request .= "'". $_POST["codeclient"] ."',";
@@ -238,6 +250,7 @@ function addHabite($conn, $newIDaddress){
     }
 }
 
+// Add a "habite" with ID client
 function addHabiteNewClient($conn, $newIDaddress, $idClient){
     $request ="INSERT INTO `habite` (`codeclient`, `idAddress`) VALUES (";
     $request .= "'". $idClient ."',";
@@ -248,6 +261,7 @@ function addHabiteNewClient($conn, $newIDaddress, $idClient){
     }
 }
 
+// Delete a "habite" => a client can have only one address =====> but, an address can be link to n client(s)
 function delHabite($conn){
     $request = "DELETE FROM `habite` WHERE `codeclient`='".$_POST["codeclient"]."' AND ";
     $request .= "`idAddress`='".$_POST["codeaddress"]."'";
@@ -258,19 +272,11 @@ function delHabite($conn){
     return $result;
 }
 
+// Edit a "habite" with the ID of the new created address 
 function edtHabite($conn, $idAddress){
     $request = "UPDATE `habite` SET idAddress ='". $idAddress . "' ";
     $request .= "WHERE `codeClient`='". $_POST["codeclient"] ."'";
 
-    $result = $conn->query($request);
-    if($result == FALSE){
-        alertFunction("Failed in edit habite");
-    }
-}
-
-function edtHabiteNewClient($conn, $idAddress, $idClient){
-    $request = "UPDATE `habite` SET idAddress ='". $idAddress . "' ";
-    $request .= "WHERE `codeClient`='". $idClient ."'";
     $result = $conn->query($request);
     if($result == FALSE){
         alertFunction("Failed in edit habite");

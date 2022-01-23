@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -32,7 +34,7 @@
         
         <!--Affichage des commandes + requêtages-->
         <table class="table table-striped">
-            <caption>Liste des clients</caption>
+            <caption>Liste des commandes</caption>
             <thead bgcolor="black">
                 <tr>
                     <th scope="col">Code Command</th>
@@ -61,16 +63,23 @@
 
                     // For each command, do a request with all the data from the command and items
                     foreach($commands as $command){
+
                         $request = "SELECT *
                                     FROM `command` NATURAL JOIN `linkorder` 
                                     WHERE `idCommand` = '".$command."'";
 
                         $result = $conn->query($request);
+
                         while($row =  mysqli_fetch_array($result)) { 
                             echo '<tr>';
                             echo '<td scope="col">'.$row['idCommand'].'</td>';
                             echo '<td scope="col">'.$row['codeClient'].'</td>';
-                            echo '<td scope="col">'.$row['dateOrder'].'</td>';
+
+                            if(isset($row['dateOrder']))
+                                echo "<td scope='col'>". $row['dateOrder'] ."</td>";
+                            else
+                                echo "<td scope='col'></td>";
+
 
                             echo '<td scope="col">';
                             $request1 = "SELECT * 
@@ -80,7 +89,7 @@
 
                             $sumTotal = 0;
                             while($row1 =  mysqli_fetch_array($result1)) {
-                                echo '<div class="row">'.$row1["qtyItem"].'x '.$row1['nameItem'].' ('.$itemstatus[$row1["idStatutItem"]].')</div>';
+                                echo '<div class="row">'.$row1["qtyItem"].'x '.$row1['nameItem'].' ('.$itemstatus[$row1["idStatutItem"]-1].')</div>';
                                 $sumTotal += $row1["qtyItem"] * $row1["puItem"];
                             }                            
                             echo '</td>';
@@ -106,7 +115,39 @@
                 */
                 ?>
             </tbody>
-        </table>   
+        </table>
+        
+        <h5>Création d'une commande</h5>
+        <!--Ajout d'un commande pour un client + requêtages-->
+        <div class="card card-body mb-4">
+            <form action='forms.php' method='post'>
+                <?php
+                    $clients = getListClients($conn);
+                ?>
+
+                <div class="form-group col-sm-6">
+                    <label for="membership" class="col-sm-6 col-form-label  mb-2">Numéro du client</label>
+
+                    <select name="client" id="client" class="col-sm-6 form-control mb-4" >
+                        <?php
+                            foreach($clients as $client){
+                                echo "<option value=".$client.">".$client."</option>";
+                            }
+                        ?>
+                    </select>
+                    <input type="submit" class="btn btn-primary" name="button" value="Creer une Commande"></input>
+                </div>
+            </form>
+        </div>
+
+        <h5>Ajout d'un nouvel objet </h5>
+        <!--Ajout d'un commande pour un client + requêtages-->
+        <div class="card card-body">
+            <form action='forms.php' method='post' class="form mb-2">
+                <input type="submit" class="btn btn-primary" name="button" value="Ajouter un article"></input>
+            </form>
+        </div>
+        
     </div>
 
 
@@ -116,4 +157,3 @@
     
 </body>
 </html>
-

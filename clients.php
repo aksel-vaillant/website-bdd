@@ -102,91 +102,99 @@
         
     </div>
 
+
+
+
+   
+    <h4>Formulaire d'incription</h4>
+
     <!--Ajout d'un client + requêtages-->
-    <form action="forms.php" method="post">
-        <div class="form-group row mb-4">
-            <h5>Contact</h5>
-            <label for="nameClient" class="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-4  mb-2">
-            <input type="text" class="form-control" name="nameClient">
+    <div class="card card-body">
+        <form action="forms.php" method="post">
+            <div class="form-group row mb-4">
+                <h5>Contact</h5>
+                <label for="nameClient" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-4  mb-2">
+                <input type="text" class="form-control" name="nameClient">
+                </div>
+
+                <label for="phoneAddress" class="col-sm-2 col-form-label">Phone Number</label>
+                <div class="col-sm-4">
+                <input type="text" class="form-control" name="phoneAddress">
+                </div>
+
+                <label for="mailClient" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-4  mb-2">
+                <input type="email" class="form-control" name="mailClient">
+                </div>
+
+                <label for="facebook" class="col-sm-2 col-form-label">Facebook</label>
+                <div class="col-sm-4">
+                <input type="text" class="form-control" name="facebook">
+                </div>
+
+                <label for="instagram" class="col-sm-2 col-form-label">Instagram</label>
+                <div class="col-sm-4  mb-2">
+                <input type="text" class="form-control" name="instagram">
+                </div>
             </div>
 
-            <label for="phoneAddress" class="col-sm-2 col-form-label">Phone Number</label>
-            <div class="col-sm-4">
-            <input type="text" class="form-control" name="phoneAddress">
+            <div class="form-group row mb-4">
+                <h5>Adress</h5> 
+                <label for="numAddress" class="col-sm-2 col-form-label">Street Number</label>
+                <div class="col-sm-4  mb-2">
+                <input type="text" class="form-control" name="numAddress">
+                </div>
+                <label for="streetAddress" class="col-sm-2 col-form-label">Street</label>
+                <div class="col-sm-4">
+                <input type="text" class="form-control" name="streetAddress">
+                </div>
+
+                <label for="cityAddress" class="col-sm-2 col-form-label">City</label>
+                <div class="col-sm-2  mb-2">
+                <input type="text" class="form-control" name="cityAddress">
+                </div>
+                <label for="cityCode" class="col-sm-2 col-form-label">ZIP Code</label>
+                <div class="col-sm-2">
+                <input type="text" class="form-control" name="cityCode">
+                </div>
+                <label for="countryCode" class="col-sm-2 col-form-label">Country Code</label>
+                <div class="col-sm-2">
+                <input type="text" class="form-control" name="countryCode">
+                </div>
             </div>
 
-            <label for="mailClient" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-4  mb-2">
-            <input type="email" class="form-control" name="mailClient">
+            <div class="form-group row">
+                <h5>Fidelity</h5> 
+                <label for="membership" class="col-sm-2 col-form-label  mb-2">Membership</label>
+                
+                <div class="form-group col-sm-2">
+                    <select name="membership" class="form-control">
+                        <option value="1" selected>Silver</option>
+                        <option value="2" disabled>Gold</option>
+                        <option value="3" disabled>Platinium</option>
+                        <option value="4">Ultimate</option>
+                    </select>
+                </div>
+                
+                <label for="points" class="col-sm-2 col-form-label">Points</label>
+                <div class="col-sm-2">
+                <input type="text" class="form-control" name="points" value="0">
+                </div>
+                <label for="experyDate" class="col-sm-2 col-form-label">Expery Date</label>
+                <div class="col-sm-2">
+                <input type="date" class="form-control" name="experyDate">
+                </div>
             </div>
 
-            <label for="facebook" class="col-sm-2 col-form-label">Facebook</label>
-            <div class="col-sm-4">
-            <input type="text" class="form-control" name="facebook">
-            </div>
-
-            <label for="instagram" class="col-sm-2 col-form-label">Instagram</label>
-            <div class="col-sm-4  mb-2">
-            <input type="text" class="form-control" name="instagram">
-            </div>
-        </div>
-
-        <div class="form-group row mb-4">
-            <h5>Adress</h5> 
-            <label for="numAddress" class="col-sm-2 col-form-label">Street Number</label>
-            <div class="col-sm-4  mb-2">
-            <input type="text" class="form-control" name="numAddress">
-            </div>
-            <label for="streetAddress" class="col-sm-2 col-form-label">Street</label>
-            <div class="col-sm-4">
-            <input type="text" class="form-control" name="streetAddress">
-            </div>
-
-            <label for="cityAddress" class="col-sm-2 col-form-label">City</label>
-            <div class="col-sm-2  mb-2">
-            <input type="text" class="form-control" name="cityAddress">
-            </div>
-            <label for="cityCode" class="col-sm-2 col-form-label">ZIP Code</label>
-            <div class="col-sm-2">
-            <input type="text" class="form-control" name="cityCode">
-            </div>
-            <label for="countryCode" class="col-sm-2 col-form-label">Country Code</label>
-            <div class="col-sm-2">
-            <input type="text" class="form-control" name="countryCode">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <h5>Fidelity</h5> 
-            <label for="membership" class="col-sm-2 col-form-label  mb-2">Membership</label>
             
-            <div class="form-group col-sm-2">
-                <select name="membership" class="form-control">
-                    <option value="1" selected>Silver</option>
-                    <option value="2" disabled>Gold</option>
-                    <option value="3" disabled>Platinium</option>
-                    <option value="4">Ultimate</option>
-                </select>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                <button type="submit" name="add_client" class="btn btn-primary">Créer un compte client</button>
+                </div>
             </div>
-            
-            <label for="points" class="col-sm-2 col-form-label">Points</label>
-            <div class="col-sm-2">
-            <input type="text" class="form-control" name="points" value="0">
-            </div>
-            <label for="experyDate" class="col-sm-2 col-form-label">Expery Date</label>
-            <div class="col-sm-2">
-            <input type="date" class="form-control" name="experyDate">
-            </div>
-        </div>
-
-        
-        <div class="form-group row">
-            <div class="col-sm-10">
-            <button type="submit" name="add_client" class="btn btn-primary">Add Client</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <script>
