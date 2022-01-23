@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Data</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
 <?php include ('components/menu.php'); ?>
 
 <div class="container">
-    <button class="btn btn-secondary mt-5" onclick="history.back();">Retour</button>
+    <button class="btn btn-secondary mt-5" onclick="history.back();">Back</button>
 
     <?php 
 
@@ -230,7 +230,7 @@
             }
 
             $requestParameter = "";
-            
+
             // Calc the lenght and then it's a number => request by id
             if(isset($_POST["idCommand"])){
                 if(strlen($_POST["idCommand"]) >= 18){
@@ -256,7 +256,6 @@
 
                 $requestParameter = "`idCommand` = '".$idCommand."';";
             }
-
 
             $request = "SELECT * FROM `compose` NATURAL JOIN `item` WHERE ". $requestParameter.";";
             $result = $conn->query($request);
@@ -308,7 +307,7 @@
                     ?>
 
                     <div class="form-group row mb-2">
-                        <h5 class="mb-3">Article déjà éxistant</h5>
+                        <h5 class="mb-3">Existing articles</h5>
                         <label for="articleExistant" class="col-sm-1 col-form-label  mb-2">Items</label>
                         
                         <div class="form-group col-sm-3">
@@ -340,7 +339,7 @@
                     </div>
                 </form>
 
-                <h5>Modifier la description</h5>
+                <h5>Edit description</h5>
                 <form action="forms.php" method="post">
 
                     <div class="form-group row mb-12">

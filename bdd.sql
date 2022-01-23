@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 21 jan. 2022 à 10:14
+-- Généré le : Dim 23 jan. 2022 à 21:13
 -- Version du serveur :  10.4.11-MariaDB
 -- Version de PHP : 7.4.2
 
@@ -44,7 +44,10 @@ CREATE TABLE `address` (
 
 INSERT INTO `address` (`idAddress`, `countryCode`, `cityAddress`, `cityCode`, `streetAddress`, `numAddress`, `phoneAddress`) VALUES
 (1, 'FR', 'Le Mans', '72000', 'boulevard Charles Nicolle', '16', '0636958475'),
-(2, 'FR', 'La Daguenière', '49800', 'rue de Villeneuve', '5', '0231429876');
+(2, 'FR', 'La Daguenière', '49800', 'rue de Villeneuve', '5', '0231429876'),
+(3, 'FR', 'Plérin', '22190', 'avenue Henri Barbusse', '12', '0636958475'),
+(4, 'FR', 'Perdu', '65987', 'rue du paradis', '7', '0626314212'),
+(5, 'FR', 'Perdu', '65987', 'rue du paradis', '8', '0626314212');
 
 -- --------------------------------------------------------
 
@@ -65,7 +68,8 @@ CREATE TABLE `card` (
 INSERT INTO `card` (`idCard`, `codeClient`, `idMembership`) VALUES
 (1, '17-SPR-0001', 1),
 (2, '17-SPR-0002', 1),
-(3, '17-SPR-0003', 4);
+(3, '17-SPR-0003', 1),
+(4, '22-SPR-0004', 4);
 
 -- --------------------------------------------------------
 
@@ -74,8 +78,8 @@ INSERT INTO `card` (`idCard`, `codeClient`, `idMembership`) VALUES
 --
 
 CREATE TABLE `cartepoint` (
-  `idCard` int(11) DEFAULT NULL,
-  `idPoints` int(11) DEFAULT NULL
+  `idCard` int(11) NOT NULL,
+  `idPoints` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -83,10 +87,10 @@ CREATE TABLE `cartepoint` (
 --
 
 INSERT INTO `cartepoint` (`idCard`, `idPoints`) VALUES
-(1, 135685),
-(1, 139865),
-(2, 135685),
-(3, 135685);
+(1, 1),
+(2, 2),
+(3, 2),
+(4, 4);
 
 -- --------------------------------------------------------
 
@@ -97,7 +101,7 @@ INSERT INTO `cartepoint` (`idCard`, `idPoints`) VALUES
 CREATE TABLE `clients` (
   `codeclient` varchar(50) NOT NULL,
   `nameClient` varchar(20) DEFAULT NULL,
-  `mailClient` varchar(20) DEFAULT NULL,
+  `mailClient` varchar(50) DEFAULT NULL,
   `facebook` varchar(20) DEFAULT NULL,
   `instagram` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -109,7 +113,8 @@ CREATE TABLE `clients` (
 INSERT INTO `clients` (`codeclient`, `nameClient`, `mailClient`, `facebook`, `instagram`) VALUES
 ('17-SPR-0001', 'Jean Michelle Moulin', 'jeanmi_300@yahoo.fr', 'JM Moulin', 'jmm20'),
 ('17-SPR-0002', 'Didier Raoul', 'didiR@gmail.com', 'Didier R', 'didi20'),
-('17-SPR-0003', 'Rasp', 'rasp@hotmail.fr', 'raaa', 'rasp49');
+('17-SPR-0003', 'Le Batard Clément', 'rasp@hotmail.fr', 'raaa', 'rasp49'),
+('22-SPR-0004', 'Aksel Vaillant ', 'aksouvaillanthappy@gmail.com', 'Aksel Vaillant ', 'aksel-vaillant');
 
 -- --------------------------------------------------------
 
@@ -130,7 +135,8 @@ CREATE TABLE `command` (
 --
 
 INSERT INTO `command` (`idCommand`, `dateOrder`, `noteOrder`, `delivry`, `codeClient`) VALUES
-('21012022-CMD-C0001', '2022-01-21', 'Très belle commande', NULL, '17-SPR-0001');
+('21012022-CMD-C0001', '2022-01-21', 'Ceci est un description', NULL, '17-SPR-0001'),
+('23012022-CMD-C0002', NULL, '', NULL, '22-SPR-0004');
 
 -- --------------------------------------------------------
 
@@ -139,8 +145,8 @@ INSERT INTO `command` (`idCommand`, `dateOrder`, `noteOrder`, `delivry`, `codeCl
 --
 
 CREATE TABLE `compose` (
-  `idCommand` varchar(20) DEFAULT NULL,
-  `idItem` int(11) DEFAULT NULL,
+  `idCommand` varchar(20) NOT NULL,
+  `idItem` int(11) NOT NULL,
   `qtyItem` int(11) DEFAULT NULL,
   `puItem` decimal(6,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -150,8 +156,9 @@ CREATE TABLE `compose` (
 --
 
 INSERT INTO `compose` (`idCommand`, `idItem`, `qtyItem`, `puItem`) VALUES
-('21012022-CMD-C0001', 1, 2, '2.52'),
-('21012022-CMD-C0001', 4, 1, '10.62');
+('21012022-CMD-C0001', 1, 3, '12.00'),
+('21012022-CMD-C0001', 4, 1, '45.00'),
+('23012022-CMD-C0002', 1, 2, '10.00');
 
 -- --------------------------------------------------------
 
@@ -183,7 +190,8 @@ CREATE TABLE `habite` (
 INSERT INTO `habite` (`codeClient`, `idAddress`) VALUES
 ('17-SPR-0001', 1),
 ('17-SPR-0002', 2),
-('17-SPR-0003', 1);
+('17-SPR-0003', 1),
+('22-SPR-0004', 5);
 
 -- --------------------------------------------------------
 
@@ -207,7 +215,8 @@ INSERT INTO `item` (`idItem`, `nameItem`, `descItem`, `puItemRef`) VALUES
 (2, 'Nuxe Lait Corps', '', '18.00'),
 (3, 'Nuxe set Voyage', '', '29.00'),
 (4, 'Crème anti-rides BIO LA PROVENCALE', '', '49.00'),
-(5, 'Crème de nuit anti-âge bio N.A.E', '', '45.00');
+(5, 'Crème de nuit anti-âge bio N.A.E', '', '45.00'),
+(24, 'bhibi', '', '5.69');
 
 -- --------------------------------------------------------
 
@@ -218,7 +227,7 @@ INSERT INTO `item` (`idItem`, `nameItem`, `descItem`, `puItemRef`) VALUES
 CREATE TABLE `itemstatus` (
   `idStatutItem` int(11) NOT NULL,
   `typeStatusItem` varchar(20) DEFAULT NULL
-) ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `itemstatus`
@@ -233,7 +242,7 @@ INSERT INTO `itemstatus` (`idStatutItem`, `typeStatusItem`) VALUES
 (6, 'packed'),
 (7, 'dispatched'),
 (8, 'arrived'),
-(9, NULL),
+(9, 'delivred'),
 (10, 'other');
 
 -- --------------------------------------------------------
@@ -254,7 +263,9 @@ CREATE TABLE `linkitem` (
 
 INSERT INTO `linkitem` (`dateStatut`, `idItem`, `idStatutItem`) VALUES
 ('2022-01-21', 1, 1),
-('2022-01-21', 4, 2);
+('2022-01-21', 4, 2),
+('2022-01-21', 23, 1),
+('2022-01-21', 24, 1);
 
 -- --------------------------------------------------------
 
@@ -273,7 +284,8 @@ CREATE TABLE `linkorder` (
 --
 
 INSERT INTO `linkorder` (`dateStatut`, `idStatut`, `idCommand`) VALUES
-('2022-01-21', 1, '21012022-CMD-C0001');
+('2022-01-21', 1, '21012022-CMD-C0001'),
+('2022-01-23', 1, '23012022-CMD-C0002');
 
 -- --------------------------------------------------------
 
@@ -306,7 +318,7 @@ INSERT INTO `membership` (`idMembership`, `nameMembership`, `maxPoint`) VALUES
 CREATE TABLE `orderstatus` (
   `idStatut` int(11) NOT NULL,
   `typeStatut` varchar(20) DEFAULT NULL
-) ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `orderstatus`
@@ -363,8 +375,11 @@ CREATE TABLE `points` (
 --
 
 INSERT INTO `points` (`idPoints`, `numPoint`, `experyPoint`) VALUES
-(135685, 300, '2022-01-22'),
-(139865, 500, '2022-01-31');
+(1, 300, '2022-01-25'),
+(2, 500, '2022-01-31'),
+(3, 5000, '2022-07-13'),
+(4, 500, '2022-01-30'),
+(5, 0, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -408,6 +423,7 @@ ALTER TABLE `card`
 -- Index pour la table `cartepoint`
 --
 ALTER TABLE `cartepoint`
+  ADD PRIMARY KEY (`idCard`,`idPoints`),
   ADD KEY `idCard` (`idCard`),
   ADD KEY `idPoints` (`idPoints`);
 
@@ -428,6 +444,7 @@ ALTER TABLE `command`
 -- Index pour la table `compose`
 --
 ALTER TABLE `compose`
+  ADD PRIMARY KEY (`idCommand`,`idItem`),
   ADD KEY `idItem` (`idItem`),
   ADD KEY `idCommand` (`idCommand`);
 
@@ -461,6 +478,7 @@ ALTER TABLE `itemstatus`
 -- Index pour la table `linkitem`
 --
 ALTER TABLE `linkitem`
+  ADD PRIMARY KEY (`idItem`,`idStatutItem`),
   ADD KEY `FK_idItem` (`idItem`),
   ADD KEY `FK_idStatutItem` (`idStatutItem`);
 
@@ -468,6 +486,7 @@ ALTER TABLE `linkitem`
 -- Index pour la table `linkorder`
 --
 ALTER TABLE `linkorder`
+  ADD PRIMARY KEY (`idStatut`,`idCommand`),
   ADD KEY `FK_idCommand` (`idStatut`),
   ADD KEY `idCommand` (`idCommand`);
 
@@ -518,7 +537,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT pour la table `address`
 --
 ALTER TABLE `address`
-  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `card`
@@ -536,13 +555,13 @@ ALTER TABLE `facture`
 -- AUTO_INCREMENT pour la table `item`
 --
 ALTER TABLE `item`
-  MODIFY `idItem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idItem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `itemstatus`
 --
 ALTER TABLE `itemstatus`
-  MODIFY `idStatutItem` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idStatutItem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `membership`
@@ -554,7 +573,7 @@ ALTER TABLE `membership`
 -- AUTO_INCREMENT pour la table `orderstatus`
 --
 ALTER TABLE `orderstatus`
-  MODIFY `idStatut` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idStatut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `payement`
@@ -566,7 +585,7 @@ ALTER TABLE `payement`
 -- AUTO_INCREMENT pour la table `points`
 --
 ALTER TABLE `points`
-  MODIFY `idPoints` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139866;
+  MODIFY `idPoints` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `stock`
@@ -617,39 +636,6 @@ ALTER TABLE `facture`
 ALTER TABLE `habite`
   ADD CONSTRAINT `habite_ibfk_1` FOREIGN KEY (`codeClient`) REFERENCES `clients` (`codeclient`),
   ADD CONSTRAINT `habite_ibfk_2` FOREIGN KEY (`idAddress`) REFERENCES `address` (`idAddress`);
-
---
--- Contraintes pour la table `linkitem`
---
-ALTER TABLE `linkitem`
-  ADD CONSTRAINT `FK_idItem` FOREIGN KEY (`idItem`) REFERENCES `item` (`idItem`),
-  ADD CONSTRAINT `FK_idStatutItem` FOREIGN KEY (`idStatutItem`) REFERENCES `itemstatus` (`idStatutItem`);
-
---
--- Contraintes pour la table `linkorder`
---
-ALTER TABLE `linkorder`
-  ADD CONSTRAINT `FK_idStatut` FOREIGN KEY (`idStatut`) REFERENCES `orderstatus` (`idStatut`),
-  ADD CONSTRAINT `linkorder_ibfk_1` FOREIGN KEY (`idCommand`) REFERENCES `command` (`idCommand`);
-
---
--- Contraintes pour la table `payement`
---
-ALTER TABLE `payement`
-  ADD CONSTRAINT `payement_ibfk_1` FOREIGN KEY (`idAdvancementPayement`) REFERENCES `payement` (`idPayement`);
-
---
--- Contraintes pour la table `payer`
---
-ALTER TABLE `payer`
-  ADD CONSTRAINT `payer_ibfk_1` FOREIGN KEY (`numFacture`) REFERENCES `facture` (`numFacture`),
-  ADD CONSTRAINT `payer_ibfk_2` FOREIGN KEY (`idPayement`) REFERENCES `payement` (`idPayement`);
-
---
--- Contraintes pour la table `stock`
---
-ALTER TABLE `stock`
-  ADD CONSTRAINT `stock_ibfk_1` FOREIGN KEY (`idItem`) REFERENCES `item` (`idItem`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

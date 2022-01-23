@@ -1,5 +1,8 @@
 <?php 
 
+session_start();
+//session_destroy();
+
 function openConnection(){
     $dbhost = "localhost";
     $dbuser = "root";
@@ -13,9 +16,9 @@ function openConnection(){
         echo "Connexion réussi";
     }*/
     return $conn;
- }
+}
 
- function closeConnection($conn){
+function closeConnection($conn){
     $conn -> close();
 }
 
@@ -283,10 +286,4 @@ function edtHabite($conn, $idAddress){
     }
 }
 
-session_start();
-//$_SESSION["message"] = "";
-
-
-//session_destroy();
- 
 ?>
