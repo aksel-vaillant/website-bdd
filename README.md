@@ -1,7 +1,7 @@
 # website-bdd
 
 Realized by Aksel Vaillant, Nicolas Boisseau, Clément Le Batard.   
-Computer engineering students at ENSIM - Le Mans Université [FRANCE]   
+Computer science students at ENSIM - Le Mans Université [FRANCE]   
 Under the direction of Mr. Madeth May
 
 ------------------
